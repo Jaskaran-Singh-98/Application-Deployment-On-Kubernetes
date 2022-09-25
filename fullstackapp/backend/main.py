@@ -23,7 +23,7 @@ class Text(db.Model):
     def __repr__(self):
         return f"<Text {self.text}>"
 
-@app.route('/fetch')
+@app.route('/api/fetch')
 def fetch():
     words = Text.query.all()
     results = [
@@ -32,18 +32,19 @@ def fetch():
         } for word in words]
     return {"texts": results}, 200
 
-@app.route('/add', methods=['POST'])
+@app.route('/api/add', methods=['POST'])
 def add():
     text = request.json['text']
     db.session.add(Text(text=text))
     db.session.commit()
     return 'Done', 201
 
-@app.route('/delete', methods=['DELETE'])
+@app.route('/api/delete', methods=['DELETE'])
 def delete():
     db.session.query(Text).delete()
     db.session.commit()
     return 'Done', 200
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')

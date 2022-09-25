@@ -18,7 +18,7 @@ spec:
       - name: react-frontend
         image: k8sdeployment.azurecr.io/frontend:latest
         ports:
-        - containerPort: 3000
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -30,4 +30,4 @@ spec:
     app: frontend
   ports:
   - port: 3000
-    targetPort: 3000
+    targetPort: 80

@@ -9,6 +9,15 @@ kind: ConfigMap
 metadata:
   name: pg-init-script
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dbsecret
+type: Opaque
+data:
+  dbuser: cG9zdGdyZXM=
+  dbpassword: cG9zdGdyZXM=
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -35,9 +44,15 @@ spec:
           mountPath: /docker-entrypoint-initdb.d
         env:
           - name: POSTGRES_USER
-            value: "postgres"
+            valueFrom:
+               secretKeyRef:
+                  name: dbsecret
+                  key: dbuser
           - name: POSTGRES_PASSWORD
-            value: "postgres"
+            valueFrom:
+               secretKeyRef:
+                  name: dbsecret
+                  key: dbpassword
       volumes:
         - name: sqlscript
           configMap:

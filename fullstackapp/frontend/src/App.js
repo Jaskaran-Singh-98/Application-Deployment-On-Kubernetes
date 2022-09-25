@@ -10,7 +10,7 @@ function App() {
 
   function sendToDb() {
 
-    axios.post('/add', {
+    axios.post('/api/add', {
       text: input
     }).then(res => {
       fetchFromDb()
@@ -24,13 +24,13 @@ function App() {
   }
 
   function fetchFromDb() {
-    fetch("/fetch")
+    fetch("/api/fetch")
       .then(response => response.json())
       .then(data => setTexts(data.texts));
   }
 
   function clear() {
-    axios.delete("/delete")
+    axios.delete("/api/delete")
       .then(res => {
         console.log(res);
         setTexts([])
@@ -46,7 +46,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        Hi! I am a full-stack app!
+        Note-Taking App
       </header>
       <div className="Grid">
         <div className="Grid-Item">
